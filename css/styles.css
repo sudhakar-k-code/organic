@@ -1,0 +1,26 @@
+/* Custom Styles */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+}
+
+header {
+    background: url('../images/hero.jpg') no-repeat center center/cover;
+    min-height: 300px;
+}
+
+h1, h2 {
+    font-weight: bold;
+}
+
+/* Product Image Styles */
+.product-image {
+    height: 200px; /* Set a fixed height */
+    object-fit: cover; /* Cover the space while maintaining aspect ratio */
+}
+
+/* Card Styles */
+.card {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: none;
+}
