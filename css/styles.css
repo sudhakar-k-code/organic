@@ -2,25 +2,565 @@
 body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
+    background-color: #f8f9fa; /* Light background for better contrast */
 }
 
 header {
-    background: url('../images/hero.jpg') no-repeat center center/cover;
     min-height: 300px;
+    display: flex;
+    justify-content: center;
+	padding-top: 80px; /* Adjust this value based on the height of your navbar */
+    align-items: center;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Text shadow for better readability */
+    color: white;
+	z-index: 900; /* Lower than the navbar *
 }
 
 h1, h2 {
     font-weight: bold;
+    animation: fadeIn 1s ease-in-out; /* Animation for headers */
 }
 
 /* Product Image Styles */
 .product-image {
     height: 200px; /* Set a fixed height */
     object-fit: cover; /* Cover the space while maintaining aspect ratio */
+    transition: transform 0.5s ease, opacity 0.5s ease; /* Animation effects on hover/scroll */
+    z-index: 1; /* Ensure the image stays above text */
+    position: relative; /* Enable layering for image within the card */
 }
 
 /* Card Styles */
 .card {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border: none;
+    position: relative;
+    overflow: hidden; /* Prevent zoomed image from overflowing the card */
+    transition: transform 0.3s ease; /* Smooth transform transition */
 }
+
+.card-body {
+    position: relative; /* Ensure text inside card stays in position */
+    z-index: 2; /* Ensure text stays above image */
+    background: white; /* Background for better visibility */
+}
+
+/* Description Style */
+.card-text {
+    color: #555; /* Slightly darker text for description */
+    margin-bottom: 0.5rem; /* Space below the description */
+}
+
+/* Card hover effect */
+.card:hover {
+    transform: scale(1.05); /* Scale effect on hover */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+}
+
+.card:hover .product-image {
+    transform: scale(1.1); /* Slightly enlarge image on card hover */
+    opacity: 0.9; /* Change opacity on hover */
+}
+
+/* Button Styles */
+.btn-success {
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Button hover effect */
+}
+
+.btn-success:hover {
+    background-color: #28a745; /* Slightly brighter green on hover */
+    transform: translateY(-2px); /* Lift effect on hover */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Shadow effect on hover */
+}
+
+/* Animation Keyframes */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+
+/* Footer Styles */
+footer {
+    background-color: #28a745; /* Green footer */
+    color: white;
+    padding: 10px 0;
+}
+
+/* Adjust layout for better scrolling on mobile devices */
+.row.g-4 .col-lg-4, .col-md-6 {
+    margin-bottom: 2rem; /* Add space between cards */
+}
+
+/* Ensure proper layout for small screens */
+@media (max-width: 576px) {
+    .product-image {
+        height: 150px; /* Smaller images for mobile devices */
+    }
+}
+
+/* Sticky Navbar Styles */
+.navbar {
+    z-index: 1000; /* Ensure the navbar is above other elements */
+    position: sticky;
+    top: 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow to the navbar */
+    background-color: #f8f9fa; /* Ensure the navbar has a solid background */
+    padding: 0.5rem 1rem; /* Adjust the padding for a tighter fit */
+    height: 65px; /* Set a fixed height for the navbar */
+    display: flex;
+    align-items: center; /* Ensure content is vertically aligned */
+}
+
+
+
+/* Additional styling for cart icon */
+#cart-container {
+    display: inline-block; /* Keep it inline with the navbar items */
+    margin-left: 15px; /* Space between menu items and cart icon */
+	margin-left: 10px; /* Reduce margin to minimize space */
+}
+
+#cart-icon {
+    cursor: pointer; /* Pointer cursor for interactivity */
+    position: relative; /* Relative positioning for badge */
+    width: 30px; /* Set a fixed width for the icon */
+    height: 30px; /* Set a fixed height for the icon */
+}
+
+/* Adjust the badge position */
+#cart-badge {
+    position: absolute; /* Absolute positioning for badge */
+    top: -5px; /* Position above the cart icon */
+    right: -20px; /* Adjust to position the badge */
+    font-size: 0.7rem; /* Smaller font for badge */
+    padding: 2px 5px; /* Padding around the badge for better visibility */
+    border-radius: 50%; /* Round badge */
+    background-color: red; /* Badge color */
+    color: white; /* Badge text color */
+}
+
+/* Cart Icon styles */
+#cart-container {
+    display: inline-block; /* Keep it inline with the navbar items */
+    margin-left: 2px; /* Space between menu items and cart icon */
+}
+
+.cart-notification {
+    position: absolute; /* Position it relative to the cart icon */
+    background-color: #f8f9fa; /* Light background */
+    border: 1px solid #007bff; /* Border color */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px;
+    margin-top: 5px; /* Space above the notification */
+    z-index: 1000; /* Ensure it's above other elements */
+    width: 200px; /* Set a width for the notification */
+    left: 50%; /* Center it */
+    transform: translateX(-50%); /* Adjust for centering */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add some shadow for depth */
+}
+
+.notification-arrow {
+    position: absolute;
+    bottom: 100%; /* Position it above the notification */
+    left: 50%; /* Center it horizontally */
+    margin-left: -5px; /* Adjust for arrow size */
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent #007bff transparent; /* Arrow color */
+}
+
+.notification-content {
+    text-align: center; /* Center the text */
+}
+
+/* Fade-out effect */
+.fade-out {
+    opacity: 0;
+    transition: opacity 0.5s ease-out;
+}
+
+
+/* Style for Popup Menu */
+.menu-popup {
+    display: none; /* Hidden by default */
+    position: absolute; /* Position it absolutely relative to the navbar */
+    top: 60px; /* Adjust based on navbar height */
+    right: 10px; /* Align to the right */
+    background-color: #ffffff; /* White background */
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+    z-index: 1050; /* Above other elements */
+    padding: 15px; /* Padding around content */
+	overflow: hidden; /* Prevent content overflow */
+}
+
+.menu-popup ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.menu-popup li {
+    margin: 10px 0; /* Space between items */
+}
+
+.menu-popup a {
+    text-decoration: none;
+    color: #333; /* Dark text color */
+    transition: color 0.3s;
+}
+
+.menu-popup a:hover {
+    color: #007bff; /* Change color on hover */
+}
+
+/* Arrow for Popup Menu */
+.menu-popup::before {
+    content: '';
+    position: absolute;
+    top: -10px; /* Position above the popup */
+    right: 20px; /* Position to point towards the menu icon */
+    border-width: 10px; /* Size of the arrow */
+    border-style: solid;
+    border-color: transparent transparent #ffffff transparent; /* White arrow */
+}
+
+/* Ensure icons are adjacent */
+.icon-container {
+    display: flex;
+    align-items: center;
+}
+
+.icon-container .btn {
+    margin-left: 10px; /* Space between icons */
+}
+
+/* Section styles */
+section {
+    padding-top: 100px; /* Padding to avoid overlap with the navbar */
+    padding-bottom: 0px; /* Bottom padding for space */
+    
+}
+
+/* Logo styling */
+.logo-image {
+    height: 50px; /* Adjust the height to make it prominent */
+    max-width: auto; /* Prevent constraints on width */
+    object-fit: contain; /* Ensure the image fits properly within its container */
+    object-position: center; /* Focus the center of the image */
+    display: block; /* Remove extra spacing below the image */
+}
+
+/* General Tamil Text Style */
+.tamil-text {
+    font-family: 'Noto Sans Tamil', sans-serif; /* Primary Tamil font */
+    font-size: 16px; /* Default size */
+    color: #333; /* Text color */
+    letter-spacing: 0.5px; /* Slight letter spacing for readability */
+    line-height: 1; /* Comfortable line height */
+}
+
+/* Creative Tamil Heading */
+.tamil-heading {
+    font-family: 'Baloo Tammudu 2', cursive; /* Decorative Tamil font */
+    font-size: 28px; /* Larger size for headings */
+    font-weight: bold;
+    color: #ff5722; /* Vibrant color */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Attractive shadow effect */
+    text-align: center; /* Center alignment */
+}
+
+/* Small Tamil Text */
+.tamil-small {
+    font-family: 'Noto Sans Tamil', sans-serif;
+    font-size: 5px; /* Smaller size */
+    color: #666; /* Lighter text color */
+}
+
+/* Title styles */
+.hero-title {
+    font-size: 1.8rem; /* Larger font for the title */
+    font-weight: bold; /* Bold weight for emphasis */
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Shadow effect for depth */
+}
+
+/* Subtitle styles */
+.hero-subtitle {
+    font-size: 0.8rem; /* Slightly smaller than title */
+    font-weight: normal; /* Regular weight for subtitle */
+    margin-top: 10px; /* Space above subtitle */
+    color: #f8f9fa; /* Light color for contrast */
+}
+
+/* Description styles */
+.hero-description {
+    font-size: 0.9rem; /* Medium size for description */
+    margin-top: 20px; /* Space above description */
+    color: #f0f0f0; /* Light gray for readability */
+	font-weight: bold; /* Bold weight for emphasis */
+}
+
+/* Secondary text styles */
+.hero-secondary {
+    font-size: 0.9rem; /* Smaller size for secondary info */
+    margin-top: 5px; /* Space above secondary text */
+    font-style: italic; /* Italic for style */
+	font-weight: bold; /* Bold weight for emphasis */
+}
+
+.small-text {
+    font-size: 0.76em; /* Adjust the size as needed */
+    color: #666; /* Optional: Change text color */
+}
+
+/* About us Section Header Styles */
+.text-center {
+    font-size: 1.1rem; /* Font size for "Our Address" header */
+    font-weight: bold; /* Make the address header bold */
+    color: #444; /* Change text color if needed */
+    margin-top: 20px; /* Space above the address header */
+    margin-bottom: 10px; /* Space below the address header */
+}
+
+/* About Section Header Styles */
+.about-header {
+    font-size: 1.25rem; /* Font size for "Contact Us" header */
+    font-weight: bold; /* Make the header bold */
+    color: #333; /* Change text color if needed */
+    margin-bottom: 20px; /* Space below the header */
+}
+
+/* Product Section Header Styles */
+.product-header {
+    font-size: 1.1rem; /* Font size for "Our Address" header */
+    font-weight: bold; /* Make the address header bold */
+    color: #444; /* Change text color if needed */
+    margin-top: 20px; /* Space above the address header */
+    margin-bottom: 10px; /* Space below the address header */
+}
+
+/* Address Text Styles */
+.about-text {
+    font-size: 0.85rem; /* Font size for the address text */
+    color: #555; /* Change text color if needed */
+    margin-bottom: 20px; /* Space below the address text */
+	
+}
+
+
+/* Contact Section Header Styles */
+.contact-header {
+    font-size: 1.25rem; /* Font size for "Contact Us" header */
+    font-weight: bold; /* Make the header bold */
+    color: #333; /* Change text color if needed */
+    margin-bottom: 20px; /* Space below the header */
+}
+
+/* Address Section Header Styles */
+.address-header {
+    font-size: 1.1rem; /* Font size for "Our Address" header */
+    font-weight: bold; /* Make the address header bold */
+    color: #444; /* Change text color if needed */
+    margin-top: 20px; /* Space above the address header */
+    margin-bottom: 10px; /* Space below the address header */
+}
+
+/* Address Text Styles */
+.address-text {
+    font-size: 0.8rem; /* Font size for the address text */
+    color: #555; /* Change text color if needed */
+    margin-bottom: 20px; /* Space below the address text */
+}
+
+/* Google Map Styles */
+
+.google-text {
+    font-size: 0.8rem; /* Font size for "Our Address" header */
+    font-weight: bold; /* Make the address header bold */
+    color: #444; /* Change text color if needed */
+    margin-top: 20px; /* Space above the address header */
+    margin-bottom: 10px; /* Space below the address header */
+	text-align: center; /* Center align the text */
+}
+iframe {
+    border-radius: 10px; /* Rounded corners for the iframe */
+}
+
+/* Footer Styles */
+footer {
+    background-color: #28a745; /* Green background for the footer */
+    color: white; /* White text color */
+    padding: 10px 0; /* Padding for the footer */
+    font-size: 1rem; /* Font size for footer text */
+}
+
+/* General Card Styles */
+.card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    background-color: #fff; /* Add a white background for consistency */
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Title Styling */
+.product-title {
+    font-family: 'Arial, sans-serif';
+    font-weight: bold;
+    font-size: 1.25rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+    text-align: center; /* Center the title for better symmetry */
+}
+
+/* Description Styling */
+.product-description {
+    font-family: 'Georgia, serif';
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 1rem;
+    text-align: justify; /* Justify text for a cleaner look */
+}
+
+/* MRP Styling */
+.product-mrp {
+    font-family: 'Courier New, monospace';
+    font-size: 0.9rem;
+    color: #999;
+    text-decoration: line-through;
+    margin-bottom: 0.5rem;
+    text-align: left; /* Align MRP text */
+}
+
+/* Price Styling */
+.product-price {
+    font-family: 'Verdana, sans-serif';
+    font-weight: bold;
+    font-size: 1.25rem;
+    color: #28a745; /* Change to green for discounted price */
+    margin-bottom: 1rem;
+    text-align: left; /* Align price text */
+    display: inline-block;
+    background-color: #f9f9f9; /* Subtle highlight for better visibility */
+    padding: 0.3rem 0.6rem; /* Add padding for emphasis */
+    border-radius: 4px; /* Rounded corners */
+}
+
+/* Price Hover Effect */
+.product-price:hover {
+    color: #218838; /* Darker green on hover */
+    background-color: #e6ffe6; /* Light green background on hover */
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+/* Quantity Dropdown Styling */
+.product-quantity-label {
+    font-family: 'Tahoma, sans-serif';
+    font-size: 0.85rem;
+    color: #555;
+    margin-bottom: 0.3rem;
+    display: block;
+}
+
+.product-quantity {
+    font-family: 'Arial, sans-serif';
+    font-size: 0.9rem;
+    color: #333;
+    padding: 0.4rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff; /* Ensure dropdown matches card's design */
+}
+
+/* Additional Styling for Card Layout */
+.card-body {
+    padding: 1rem; /* Add more padding for a clean look */
+}
+
+.card:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Enhance hover effect on card */
+    transition: box-shadow 0.3s ease;
+}
+
+
+/* Highlight Animation for Select Box */
+@keyframes highlight {
+    0% {
+        background-color: #e6ffe6; /* Light green */
+        transform: scale(1);
+        box-shadow: 0 0 0 rgba(40, 167, 69, 0); /* No glow initially */
+    }
+    50% {
+        background-color: #b8f8b8; /* Brighter green */
+        transform: scale(1.05); /* Slightly enlarged */
+        box-shadow: 0 0 10px rgba(40, 167, 69, 0.8); /* Glowing green border */
+    }
+    100% {
+        background-color: #e6ffe6; /* Back to light green */
+        transform: scale(1);
+        box-shadow: 0 0 0 rgba(40, 167, 69, 0); /* Glow fades out */
+    }
+}
+
+/* Apply highlight effect */
+.highlight {
+    animation: highlight 2s ease-in-out; /* Highlight lasts for 2 seconds */
+    animation-fill-mode: forwards; /* Retain end state after animation */
+}
+
+/* Hover Effect for Desktop */
+.product-quantity:hover,
+.product-quantity:focus {
+    background-color: #e6ffe6; /* Light green background to represent organic */
+    border: 2px solid #28a745; /* Green border */
+    box-shadow: 0 0 10px rgba(40, 167, 69, 0.5); /* Glowing green border */
+    transition: background-color 0.3s ease, border 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+/* Responsive styles for the button */
+@media (max-width: 576px) {
+    #whatsapp-button {
+        font-size: 14px; /* Smaller font size on mobile */
+        padding: 8px 10px; /* Reduced padding */
+        width: calc(100% - 30px); /* Full width minus the margins */
+        box-sizing: border-box; /* Ensures padding is included in total width */
+    }
+}
+
+/* Button hover effect */
+#whatsapp-button:hover {
+	animation: zoom 0.3s ease-in-out; /* Zoom effect on hover */
+    background-color: #ffffff; /* Change background on hover */
+    color: #28a745; /* Change text color on hover */
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+}
+
+/* Animation keyframes */
+@keyframes zoom {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1); /* Scale up */
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Button styles */
+#whatsapp-button {
+    display: inline-flex; /* Align image and text in a row */
+    align-items: center; /* Center vertically */
+    animation: zoom 1.5s infinite; /* Animation for button */
+    margin-top: 10px; /* Space above the button */
+}
+
